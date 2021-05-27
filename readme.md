@@ -6,9 +6,8 @@ localhost:8000
 
 # TO-DO:
 - Test
-
-# para otra ocasión:
-- Autenticar por Token.
+- Autenticar por Token
+- App reutilizables
 
 # users:
 - Usuario: admin password: admin --> es admin and staff
