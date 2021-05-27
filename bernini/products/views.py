@@ -28,8 +28,6 @@ class ProductViewSet(viewsets.ModelViewSet):
         try:
             user = request.user
             cart = Cart.objects.get(pk=user.pk)
-        except User.DoesNotExist as e:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
         except Cart.DoesNotExist as e:
             cart = Cart(user=user)
             cart.save()

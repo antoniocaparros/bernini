@@ -1,10 +1,11 @@
 from django.core.mail import EmailMessage
 from rest_framework import viewsets, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from carts.models import Cart, ItemCart
+from carts.permissions import IsCartOwner
 from carts.serializers import CartSerializer, ItemCartSerializer, DeleteItemCartSerializer
 from products.models import Product
 
@@ -23,6 +24,14 @@ class UserCartViewSet(viewsets.ModelViewSet):
     """
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+
+    def get_permissions(self):
+        if self.action == 'create' or self.action == 'list':
+            permission_classes = [IsAdminUser]
+        else:
+            permission_classes = [IsCartOwner]
+
+        return [permission() for permission in permission_classes]
 
     def get_serializer_class(self):
         if self.action == 'delete_product':

@@ -11,3 +11,8 @@ localhost:8000
 
 # para otra ocasión:
 - Autenticar por Token.
+
+# users:
+Usuario: admin password: admin --> es admin and staff
+Usuario: staff password: staff --> es staff
+Usuario: prueba password: prueba --> es cliente normal
