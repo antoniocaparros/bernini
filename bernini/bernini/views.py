@@ -4,8 +4,9 @@ from django.contrib.auth.hashers import check_password
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from bernini.serializers import UserSerializer, PasswordSerializer, UserDetailSerializer
+from bernini.permissions import IsUserOwner, IsAdminUser
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -17,8 +18,10 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == 'create':
             permission_classes = [AllowAny]
+        elif self.action == 'list':
+            permission_classes = [IsAdminUser]
         else:
-            permission_classes = [IsAuthenticated]
+            permission_classes = [IsAdminUser | IsUserOwner]
 
         return [permission() for permission in permission_classes]
 
