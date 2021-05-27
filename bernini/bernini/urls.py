@@ -17,10 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from bernini.views import UserViewSet
+from products.urls import router as products_router
+from carts.urls import router as carts_router
 
 # API Root - Router
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.registry.extend(products_router.registry)
+router.registry.extend(carts_router.registry)
 
 urlpatterns = [
     path('', include(router.urls)),
