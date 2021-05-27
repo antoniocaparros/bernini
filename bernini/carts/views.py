@@ -1,3 +1,4 @@
+from django.core.mail import EmailMessage
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
@@ -48,3 +49,31 @@ class UserCartViewSet(viewsets.ModelViewSet):
             return Response({'status': 'item deleted'})
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated])
+    def make_order(self, request, pk=None):
+        if str(request.user.pk) == str(pk):
+            items_in_cart = ItemCart.objects.filter(cart__pk=pk)
+            csv = ""
+            for itemcart in items_in_cart:
+                csv += str(itemcart.product.id) + "," + str(itemcart.product.title) + "," + str(itemcart.product.price) + "\n"
+            
+            email = EmailMessage(
+                'Pedido por el usuario ' + str(request.user.email),
+                'Se adjunta el CSV con el pedido :)',
+                'admin@admin.com',
+                ['' + str(request.user.email) + ''],
+                ['' + str(request.user.email) + ''],
+                reply_to=['admin@admin.com'],
+                headers={},
+            )
+            email.attach('pedido.csv', csv, 'text/csv')
+            email.send()
+            
+            # borramos el carrito
+            cart = Cart.objects.get(pk=pk) # esto no puede petar, creo..
+            cart.delete()
+            
+            return Response({'status': 'make_order correct. CSV sended.'})
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
