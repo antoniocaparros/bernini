@@ -5,9 +5,7 @@ docker-compose up --build
 localhost:8000
 
 # TO-DO:
-- app carts
-- app products
-- app users
+- Test
 
 # para otra ocasión:
 - Autenticar por Token.
