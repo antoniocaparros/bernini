@@ -27,13 +27,19 @@ router.register(r'users', UserViewSet)
 router.registry.extend(products_router.registry)
 router.registry.extend(carts_router.registry)
 
+schema_url_patterns = [
+    path('', include('bernini.urls')),
+]
+
 schema = get_schema_view(
-    title="Your Project", 
-    description="API for all things …", 
+    title="Bernini API", 
+    description="API for ecommerce",
+    url="http://localhost:8000",
+    patterns=schema_url_patterns,
     version="1.0.0")
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls), # panel admin
     path('api-auth/', include('rest_framework.urls')), # login default de rest framework
     path('doc/', schema, name='openapi-schema'),
