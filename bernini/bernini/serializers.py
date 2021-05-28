@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
     User accounts serializer
     """
     password = serializers.CharField(
-        required=False,
+        required=True,
         help_text='Leave empty if no change needed',
         style={'input_type': 'password', 'placeholder': 'Password'}
     )

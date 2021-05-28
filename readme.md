@@ -1,5 +1,8 @@
 # init db and start project:
-docker-compose up --build
+`docker-compose up --build`
+
+# check tests
+`docker-compose run web python manage.py test`
 
 ## url
 `localhost:8000/api/`
