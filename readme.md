@@ -2,7 +2,10 @@
 docker-compose up --build
 
 ## url
-localhost:8000
+`localhost:8000/api/`
+
+## schema
+`localhost:8000/doc/`
 
 # TO-DO:
 - Test
