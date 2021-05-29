@@ -11,8 +11,7 @@
 `localhost:8000/`
 
 # TO-DO:
-- Tests
-- Autenticar por Token
+- Tests carts
 - App reutilizables
 
 # users:
