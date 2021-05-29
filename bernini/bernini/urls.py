@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework.schemas import get_schema_view
 from rest_framework import routers
 from bernini.views import UserViewSet
@@ -27,20 +28,15 @@ router.register(r'users', UserViewSet)
 router.registry.extend(products_router.registry)
 router.registry.extend(carts_router.registry)
 
-schema_url_patterns = [
-    path('', include('bernini.urls')),
-]
-
 schema = get_schema_view(
     title="Bernini API", 
     description="API for ecommerce",
     url="http://localhost:8000",
-    patterns=schema_url_patterns,
     version="1.0.0")
 
 urlpatterns = [
     path('api/', include(router.urls)),
+    path('auth/', obtain_auth_token, name='api_token_auth'),
+    path('', schema, name='openapi-schema'),
     path('admin/', admin.site.urls), # panel admin
-    path('api-auth/', include('rest_framework.urls')), # login default de rest framework
-    path('doc/', schema, name='openapi-schema'),
 ]

@@ -19,7 +19,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAuthenticated]
         else:
             permission_classes = [AllowAny]
-
+            
         return [permission() for permission in permission_classes]
 
     @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated])

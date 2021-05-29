@@ -8,10 +8,10 @@
 `localhost:8000/api/`
 
 ## schema
-`localhost:8000/doc/`
+`localhost:8000/`
 
 # TO-DO:
-- Test
+- Tests
 - Autenticar por Token
 - App reutilizables
 
