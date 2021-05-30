@@ -22,7 +22,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             
         return [permission() for permission in permission_classes]
 
-    @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['get'], permission_classes=[IsAuthenticated], url_name="add_to_cart")
     def add_to_cart(self, request, pk=None):
         """Add product to cart"""
         try:

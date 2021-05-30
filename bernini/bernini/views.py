@@ -32,7 +32,7 @@ class UserViewSet(viewsets.ModelViewSet):
             return UserDetailSerializer
         return UserSerializer
 
-    @action(detail=True, methods=['post'])
+    @action(detail=True, methods=['post'], url_name="change_password")
     def set_password(self, request, pk=None):
         user = self.get_object()
         serializer = PasswordSerializer(data=request.data)
